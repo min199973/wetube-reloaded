@@ -106,11 +106,19 @@ const handleKeydown = (event) => {
   }
 };
 
+const handleEnded = () => {
+  const { id } = videoContainer.dataset;
+  fetch(`/api/videos/${id}/view`, {
+    method: "POST",
+  });
+};
+
 playBtn.addEventListener("click", handlePlayClick);
 muteBtn.addEventListener("click", handleMuteClick);
 volumeRange.addEventListener("input", handleVolumeChange);
-video.addEventListener("loadeddata", handleLoadedMetadata);
+video.addEventListener("loadedmetadata", handleLoadedMetadata);
 video.addEventListener("timeupdate", handleTimeUpdate);
+video.addEventListener("ended", handleEnded);
 videoContainer.addEventListener("mousemove", handleMouseMove);
 videoContainer.addEventListener("mouseleave", handleMouseLeave);
 timeline.addEventListener("input", handleTimelineChange);
@@ -135,24 +143,12 @@ document.addEventListener("keydown", (event) => {
   }
 });
 document.addEventListener("keydown", function (event) {
-  // 방향키 이벤트인 경우
   if (event.keyCode >= 37 && event.keyCode <= 40) {
-    // 이벤트 기본 동작 취소
     event.preventDefault();
 
-    // 현재 재생 위치 가져오기
-    var currentTime = video.currentTime;
+    const timeAdjustment = event.keyCode === 37 ? -5 : 5; // 방향키에 따른 이동 시간 계산
 
-    // 방향키에 따라 재생 위치 이동시키기
-    switch (event.keyCode) {
-      case 37: // 왼쪽 방향키
-        video.currentTime = currentTime - 5; // 5초 이전으로 이동
-        handleMouseMove();
-        break;
-      case 39: // 오른쪽 방향키
-        video.currentTime = currentTime + 5; // 5초 이후로 이동
-        handleMouseMove();
-        break;
-    }
+    video.currentTime += timeAdjustment; // 재생 위치 이동
+    handleMouseMove();
   }
 });
