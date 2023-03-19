@@ -103,6 +103,7 @@ const handleMouseLeave = () => {
 const handleKeydown = (event) => {
   if (event.code === "Space") {
     handlePlayClick();
+    event.preventDefault();
   }
 };
 
@@ -124,6 +125,12 @@ videoContainer.addEventListener("mouseleave", handleMouseLeave);
 timeline.addEventListener("input", handleTimelineChange);
 fullScreenBtn.addEventListener("click", handleFullscreen);
 video.addEventListener("click", handlePlayClick);
+window.addEventListener("keydown", function (e) {
+  // space키를 눌러도 아래로 스크롤하지 않음
+  if (e.keyCode === 32 && e.target === document.body) {
+    e.preventDefault();
+  }
+});
 document.addEventListener("keydown", (event) => {
   if (event.code === "Space") {
     handlePlayClick();
