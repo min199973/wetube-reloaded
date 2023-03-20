@@ -100,13 +100,6 @@ const handleMouseLeave = () => {
   controlsTimeout = setTimeout(hideControls, 3000);
 };
 
-const handleKeydown = (event) => {
-  if (event.code === "Space") {
-    handlePlayClick();
-    event.preventDefault();
-  }
-};
-
 const handleEnded = () => {
   const { id } = videoContainer.dataset;
   fetch(`/api/videos/${id}/view`, {
@@ -124,38 +117,3 @@ videoContainer.addEventListener("mousemove", handleMouseMove);
 videoContainer.addEventListener("mouseleave", handleMouseLeave);
 timeline.addEventListener("input", handleTimelineChange);
 fullScreenBtn.addEventListener("click", handleFullscreen);
-video.addEventListener("click", handlePlayClick);
-window.addEventListener("keydown", function (e) {
-  // space키를 눌러도 아래로 스크롤하지 않음
-  if (e.keyCode === 32 && e.target === document.body) {
-    e.preventDefault();
-  }
-});
-document.addEventListener("keydown", (event) => {
-  if (event.code === "Space") {
-    handlePlayClick();
-    handleMouseMove();
-  }
-});
-document.addEventListener("keydown", (event) => {
-  if (event.key === "m" || event.key === "M") {
-    handleMuteClick();
-    event.preventDefault();
-  }
-});
-document.addEventListener("keydown", (event) => {
-  if (event.key === "f" || event.key === "F") {
-    handleFullscreen();
-    event.preventDefault();
-  }
-});
-document.addEventListener("keydown", function (event) {
-  if (event.keyCode >= 37 && event.keyCode <= 40) {
-    event.preventDefault();
-
-    const timeAdjustment = event.keyCode === 37 ? -5 : 5; // 방향키에 따른 이동 시간 계산
-
-    video.currentTime += timeAdjustment; // 재생 위치 이동
-    handleMouseMove();
-  }
-});
