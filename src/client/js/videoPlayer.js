@@ -183,12 +183,12 @@ document.addEventListener("keydown", (event) => {
     video.currentTime -= 5;
     handleMouseMove();
   }
-  if (event.code === "ArrowUp") {
+  if (event.code === "ArrowUp" && event.target.id !== "textarea") {
     event.preventDefault();
     video.volume = Math.min(video.volume + 0.1, 1);
     volumeInput.value = video.volume;
     handleMouseMove();
-  } else if (event.code === "ArrowDown") {
+  } else if (event.code === "ArrowDown" && event.target.id !== "textarea") {
     event.preventDefault();
     video.volume = Math.max(video.volume - 0.1, 0);
     volumeInput.value = video.volume;
