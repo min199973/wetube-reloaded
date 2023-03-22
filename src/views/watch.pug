@@ -32,7 +32,7 @@ block content
     if loggedIn
         div.video__comments
             form.video__comment-form#commentForm
-                textarea(cols="30", rows="10", placeholder="Write a nice commment...",maxlength="20")#textarea
+                textarea(cols="30", rows="10", placeholder="Write a nice commment...",maxlength="20",minlength="0")#textarea
                 button#addComment Add Comment 
     div.video__comments
         ul 

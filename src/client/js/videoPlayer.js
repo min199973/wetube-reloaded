@@ -13,6 +13,7 @@ const videoContainer = document.getElementById("videoContainer");
 const videoControls = document.getElementById("videoControls");
 const textarea = document.getElementById("textarea");
 const addComment = document.getElementById("addComment");
+const volumeInput = document.querySelector("#volume");
 
 let controlsTimeout = null;
 let controlsMovementTimeout = null;
@@ -37,14 +38,6 @@ const handleMute = (e) => {
     video.muted = true;
   }
 
-  if (video.muted) {
-    muteBtnIcon.classList = "fas fa-volume-mute";
-  } else if (!video.muted && volumeValue >= 0.5) {
-    muteBtnIcon.classList = "fas fa-volume-up";
-  } else if (!video.muted && volumeValue >= 0.1) {
-    muteBtnIcon.classList = "fas fa-volume-down";
-  }
-
   volumeRange.value = video.muted ? 0 : volumeValue;
 };
 
@@ -62,6 +55,9 @@ const handleVolumeChange = (e) => {
     muteBtnIcon.classList = "fas fa-volume-down";
   } else if (video.volume <= 2.7755575615628914e-17) {
     muteBtnIcon.classList = "fas fa-volume-mute";
+  }
+  if (video.muted) {
+    video.muted = false;
   }
 };
 
@@ -186,6 +182,24 @@ document.addEventListener("keydown", (event) => {
   if (event.code == "ArrowLeft" && event.target.id !== "textarea") {
     video.currentTime -= 5;
     handleMouseMove();
+  }
+  if (event.code === "ArrowUp") {
+    event.preventDefault();
+    video.volume = Math.min(video.volume + 0.1, 1);
+    volumeInput.value = video.volume;
+    handleMouseMove();
+  } else if (event.code === "ArrowDown") {
+    event.preventDefault();
+    video.volume = Math.max(video.volume - 0.1, 0);
+    volumeInput.value = video.volume;
+    handleMouseMove();
+  }
+  if (video.volume >= 0.5) {
+    muteBtnIcon.classList = "fas fa-volume-up";
+  } else if (video.volume >= 0.1) {
+    muteBtnIcon.classList = "fas fa-volume-down";
+  } else if (video.volume <= 2.7755575615628914e-17) {
+    muteBtnIcon.classList = "fas fa-volume-mute";
   }
 });
 
