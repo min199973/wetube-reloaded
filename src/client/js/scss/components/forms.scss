@@ -30,7 +30,7 @@ input[type="submit"],
   border-radius: 5px;
   padding: 12px 20px;
   background-color: white !important;
-  color: rgba($color: $red, $alpha: 1) !important;
+  color: black !important;
   text-align: center !important;
   cursor: pointer;
   display: block;
@@ -42,4 +42,12 @@ input[type="submit"],
     opacity: 0.5;
     pointer-events: none;
   }
+}
+.social__btn--github {
+  background-color: #374151 !important;
+  color: white !important;
+}
+.social__btn--kakao {
+  background-color: #fee501 !important;
+  color: black !important;
 }

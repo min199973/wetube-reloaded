@@ -252,7 +252,7 @@ input[type=submit],
   border-radius: 5px;
   padding: 12px 20px;
   background-color: white !important;
-  color: #ff1300 !important;
+  color: black !important;
   text-align: center !important;
   cursor: pointer;
   display: block;
@@ -266,6 +266,16 @@ input[type=submit]:disabled,
 .social__btn:disabled {
   opacity: 0.5;
   pointer-events: none;
+}
+
+.social__btn--github {
+  background-color: #374151 !important;
+  color: white !important;
+}
+
+.social__btn--kakao {
+  background-color: #fee501 !important;
+  color: black !important;
 }
 
 .social__login {
@@ -426,6 +436,34 @@ input[type=submit]:disabled,
 .video__data .video__owner a {
   color: cornflowerblue;
   text-decoration: underline;
+}
+
+.video__comments {
+  display: flex;
+  flex-direction: column;
+  max-width: 320px;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+.video__comments .video__comment {
+  padding: 10px 25px;
+  border-radius: 9999px;
+  background-color: white;
+  color: black;
+  margin-bottom: 10px;
+}
+
+.delete__icon {
+  float: right;
+}
+
+.video__edit {
+  width: 8%;
+}
+
+.video__option {
+  width: 10%;
 }
 
 a {
