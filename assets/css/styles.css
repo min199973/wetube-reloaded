@@ -444,6 +444,18 @@ input[type=submit]:disabled,
   margin-bottom: 10px;
 }
 
+.delete__icon {
+  float: right;
+}
+
+.video__edit {
+  width: 8%;
+}
+
+.video__option {
+  width: 10%;
+}
+
 a {
   color: inherit;
   text-decoration: none;
