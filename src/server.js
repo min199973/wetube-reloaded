@@ -13,7 +13,7 @@ const app = express();
 const logger = morgan("dev");
 const favicon = require("express-favicon");
 
-app.use(favicon(__dirname + "/views/images/favicon.ico"));
+// app.use(favicon(__dirname + "/views/images/favicon.ico"));
 
 app.set("view engine", "pug");
 app.set("views", process.cwd() + "/src/views");
