@@ -62,7 +62,8 @@ export const postLogin = async (req, res) => {
 };
 
 export const startGithubLogin = (req, res) => {
-  const baseUrl = "https://github.com/login/oauth/authorize";
+  const baseUrl = `https://github.com/login/oauth/authorize`;
+
   const config = {
     client_id: process.env.GH_CLIENT,
     allow_signup: false,
@@ -72,9 +73,8 @@ export const startGithubLogin = (req, res) => {
   const finalUrl = `${baseUrl}?${params}`;
   return res.redirect(finalUrl);
 };
-
 export const finishGithubLogin = async (req, res) => {
-  const baseUrl = "https://github.com/login/oauth/access_token";
+  const baseUrl = `https://github.com/login/oauth/access_token`;
   const config = {
     client_id: process.env.GH_CLIENT,
     client_secret: process.env.GH_SECRET,
@@ -135,9 +135,10 @@ export const finishGithubLogin = async (req, res) => {
 
 export const startKakaoLogin = (req, res) => {
   const baseUrl = "https://kauth.kakao.com/oauth/authorize";
+  console.log(req.params);
   const config = {
     client_id: process.env.KK_CLIENT,
-    redirect_uri: "http://localhost:4000/users/kakao/finish",
+    redirect_uri: "https://mingoose-wetube.fly.dev/users/kakao/finish",
     response_type: "code",
   };
   const params = new URLSearchParams(config).toString();
@@ -150,8 +151,8 @@ export const finishKakaoLogin = async (req, res) => {
   const config = {
     grant_type: "authorization_code",
     client_id: process.env.KK_CLIENT,
-    redirect_uri: "http://localhost:4000/users/kakao/finish",
-    code: req.query.code,
+    redirect_uri: "https://mingoose-wetube.fly.dev/users/kakao/finish",
+    code: req.query.code, // check after login on the url
   };
   const params = new URLSearchParams(config).toString();
   const finalUrl = `${baseUrl}?${params}`;
@@ -160,6 +161,9 @@ export const finishKakaoLogin = async (req, res) => {
       method: "POST",
     })
   ).json();
+  //console.log(tokenRequest);
+  //res.send(JSON.stringify(tokenRequest));
+
   if ("access_token" in tokenRequest) {
     const { access_token } = tokenRequest;
     const apiUrl = "https://kapi.kakao.com/v2/user/me";
@@ -171,23 +175,26 @@ export const finishKakaoLogin = async (req, res) => {
       })
     ).json();
     console.log(userData);
+    // res.send(JSON.stringify(userData));
+
     const kakaoAccount = userData.kakao_account;
     const kakaoProfile = kakaoAccount.profile;
+
     if (
       kakaoAccount.is_email_valid === false ||
       kakaoAccount.is_email_verified === false
     ) {
-      return res.redirect("/");
+      return res.redirect("/login");
     }
     let user = await User.findOne({ email: kakaoAccount.email });
     if (!user) {
       user = await User.create({
         name: kakaoProfile.nickname,
-        avatarUrl: kakaoProfile.profile_image_url,
-        username: kakaoProfile.nickname,
-        email: kakaoProfile.email,
-        password: "",
         socialOnly: true,
+        username: kakaoProfile.nickname,
+        email: kakaoAccount.email,
+        password: "",
+        avatarUrl: kakaoProfile.profile_image_url,
         location: "",
       });
     }

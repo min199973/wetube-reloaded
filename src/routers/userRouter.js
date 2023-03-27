@@ -18,7 +18,7 @@ import {
   avatarUpload,
 } from "../middlewares";
 
-const userRouter = express.Router();
+const userRouter = express.Router({ mergeParams: true });
 
 userRouter.get("/logout", protectorMiddleware, logout);
 userRouter
